@@ -9,8 +9,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Project/PHP/PHPProject.php to edi
         <title></title>
     </head>
     <body>
-        <?php
-        
-        ?>
+        <form>
+            Nombre<input type="text" name="user">
+            <input type="submit">
+            
+            <?php
+            
+            ?>
+        </form>
     </body>
 </html>

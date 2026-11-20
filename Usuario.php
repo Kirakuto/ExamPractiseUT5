@@ -23,7 +23,8 @@ abstract class Usuario {
         $this->fecha_registro = $fecha_registro;
     }
     
-    public function get_datos(){
-        return $info = ["Nombre"=>[$this->nombre], "Email" =>[$this->email], "Fecha de registro"=>[$this->fecha_registro]];
+    public function get_datos() : array{
+        return $info = ["Nombre"=>$this->nombre, "Email" =>$this->email, "Fecha de registro"=>$this->fecha_registro];
     }
+    public abstract function get_tipo_usuario();
 }

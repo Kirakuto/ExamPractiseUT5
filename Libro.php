@@ -12,56 +12,56 @@
  */
 class Libro {
 
-    public static int $total_libros;
-    public static int $total_prestados;
+    public static int $total_libros = 0;
+    public static int $total_prestados = 0;
     public bool $disponible = true;
     public string $titulo;
     public string $isbn;
     public string $autor;
     public int $numero_paginas;
-    public Usuario $usuario_prestamo;
+    public ?Usuario $usuario_prestamo = null;
 
     public function __construct(string $titulo, string $isbn, string $autor, int $numero_paginas) {
-        $this->disponible = $disponible;
         $this->titulo = $titulo;
         $this->isbn = $isbn;
         $this->autor = $autor;
         $this->numero_paginas = $numero_paginas;
+        self::$total_libros++;
     }
 
-    public function prestar(Libro $libro,Usuario $usuario) {
-        if ($libro->disponible == true) {
-            $libro->disponible = false;
+    public function prestar(Usuario $usuario) {
+        if ($this->disponible == true) {
+            $this->disponible = false;
             self::$total_prestados++;
             $this->usuario_prestamo = $usuario;
-        }else{
+        } else {
             echo "<h2 style='color:red;font-weight:bold;'> El libro ya esta prestado </h2>";
         }
     }
-    
-    public function devolver(Libro $libro,Usuario $usuario){
-        if ($libro->disponible == false) {
-            $libro->disponible = true;
+
+    public function devolver() {
+        if ($this->disponible == false) {
+            $this->disponible = true;
             self::$total_prestados--;
-            unset($this->usuario_prestamo);
-        }else{
+            $this->usuario_prestamo = null;
+        } else {
             echo "<h2 style='color:red;font-weight:bold;'> El libro no esta prestado </h2>";
         }
     }
-    
-    public function get_info(){
-        return $info = ["Disponible"=>[$this->disponible], "Titulo" =>[$this->titulo], "Isbn"=>[$this->isbn], "Autor"=>[$this->autor], "Numero de paginas"=>[$this->numero_paginas]];
+
+    public function get_info() : array{
+        return $info = ["Disponible" => [$this->disponible], "Titulo" => [$this->titulo], "Isbn" => [$this->isbn], "Autor" => [$this->autor], "Numero de paginas" => [$this->numero_paginas]];
     }
-    
-    public static function get_total_libros(){
-        return self::total_libros;
+
+    public static function get_total_libros() : int{
+        return self::$total_libros;
     }
-    
-    public static function get_libros_prestados(){
+
+    public static function get_libros_prestados() : int{
         return self::$total_prestados;
     }
- 
-    public function equals(Libro $otro){
-        return this->isbn === $otro["isbn"] ? true : false;
+
+    public function equals(Libro $otro) : bool{
+        return $this->isbn === $otro->isbn ? true : false;
     }
 }
